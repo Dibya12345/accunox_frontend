@@ -1,0 +1,160 @@
+/* Remove the default styling and focus */
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  font-family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  background-color: #f5f6fa;
+  min-height: 100vh;
+  color: #2c3e50;
+}
+
+:focus {
+  outline: none;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove list styles (bullets/numbers) */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Set default font size and line height */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: Arial, sans-serif;
+}
+
+/* Remove outline on focused elements */
+:focus {
+  outline: none;
+}
+
+/* Document */
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Sections */
+main {
+  display: block;
+}
+
+/* Grouping content */
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+  border-style: none;
+}
+
+figure,
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+/* Forms */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  appearance: button;
+  -webkit-appearance: button;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: inherit;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (min-width: 0px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 576px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 992px) {
+  html {
+    font-size: 19px;
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 20px;
+  }
+}

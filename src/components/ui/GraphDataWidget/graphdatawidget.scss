@@ -1,0 +1,26 @@
+.graph_widget {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  overflow: hidden;
+  height: 300px;
+  padding: 8px;
+
+  .widget_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  //  button {
+  //     background: #f8f9fa;
+  //     border: 1px solid #dee2e6;
+  //     padding: 4px 8px;
+  //     border-radius: 4px;
+  //     cursor: pointer;
+  //     display: flex;
+  //     align-items: center;
+  //     gap: 4px;
+  //     font-size: 12px;
+  //     color: #2c3e50;
+  //   }
+}
