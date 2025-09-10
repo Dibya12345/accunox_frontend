@@ -10,6 +10,7 @@ import { useState } from "react";
 import { initialDashboardConfig } from "../utils";
 import { useSelector, useDispatch } from "react-redux";
 import NormalWidget from "../components/ui/NormalWidget";
+import AddNewWidget from "../components/AddNewWidget";
 
 const Dashboard = () => {
   const [dashboardConfig, setDashboardConfig] = useState(
@@ -17,6 +18,7 @@ const Dashboard = () => {
   );
   const [showAddWidget, setShowAddWidget] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [showAddNewWidgetModal, setShowAddNewWidgetModal] = useState(false);
 
   const handleConfirmWidgets = (widgetsToAdd) => {
     widgetsToAdd.forEach((widget) => {
@@ -74,7 +76,7 @@ const Dashboard = () => {
                   <NormalWidget title={item.name} content={item.text} />
                 )
               )}
-            <AddWidgetBtn />
+            <AddWidgetBtn onClick={() => setShowAddNewWidgetModal(true)} />
           </div>
           <h2 className="section_title">CWPP Dashboard</h2>
           <div className="widget_grid">
@@ -115,6 +117,9 @@ const Dashboard = () => {
         onConfirm={handleConfirmWidgets}
         selectedCategory={selectedCategory}
       />
+      {showAddNewWidgetModal && (
+        <AddNewWidget setShowAddWidget={setShowAddNewWidgetModal} />
+      )}
     </main>
   );
 };
