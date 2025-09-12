@@ -9,10 +9,38 @@ export const widgetSlice = createSlice({
   name: "widget",
   initialState,
   reducers: {
-    addWidget: (state, action) => {},
+    addWidget: (state, action) => {
+      const newWidget = action.payload;
+      state.value = {
+        ...state.value,
+        categories: state.value.categories.map((category) =>
+          category.id === newWidget.category
+            ? {
+                ...category,
+                widgets: [...category.widgets, newWidget],
+              }
+            : category
+        ),
+      };
+    },
     removeWidget: (state, action) => {},
     updateWidget: (state, action) => {},
-    deleteWidget: (state, action) => {},
+    deleteWidget: (state, action) => {
+      const { categoryId, widgetId } = action.payload;
+
+      state.value.categories = state.value.categories.map((category) => {
+        if (category.id === categoryId) {
+          return {
+            ...category,
+            widgets: category.widgets.filter(
+              (widget) => widget.widget_id !== widgetId
+            ),
+          };
+        }
+        return category;
+      });
+    },
+
     resetDashboard: (state) => {
       state.value = initialDashboardConfig;
     },

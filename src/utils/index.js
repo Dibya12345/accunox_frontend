@@ -5,7 +5,8 @@ export const initialDashboardConfig = {
       name: "CSPM Executive Dashboard",
       widgets: [
         {
-          id: "cloud-accounts",
+          id: "cspm-executive",
+          widget_id: "6f0f03e1-d346-4b4e-bcf2-729f4514c2ef",
           name: "Cloud Accounts",
           type: "donut-widget",
           segments: [{ percentage: 50, color: "#4285f4" }],
@@ -15,7 +16,8 @@ export const initialDashboardConfig = {
           ],
         },
         {
-          id: "risk-assessment",
+          id: "cspm-executive",
+          widget_id: "8433fd52-609c-45e5-b092-d509c6e6a664",
           name: "Cloud Account Risk Assessment",
           type: "donut-widget",
           segments: [
@@ -38,13 +40,15 @@ export const initialDashboardConfig = {
       name: "CWPP Dashboard",
       widgets: [
         {
-          id: "namespace-alerts",
+          id: "cwpp-dashboard",
+          widget_id: "f266f777-2f5e-4ef8-80c7-a580ce035d58",
           name: "Top 5 Namespace Specific Alerts",
           text: "No Graph data available!",
           type: "empty-graph",
         },
         {
-          id: "workload-alerts",
+          id: "cwpp-dashboard",
+          widget_id: "2c3cac98-840c-4c39-bb08-aeeed5ec2594",
           name: "Workload Alerts",
           text: "No Graph data available!",
           type: "empty-graph",
@@ -56,7 +60,8 @@ export const initialDashboardConfig = {
       name: "Registry Scan",
       widgets: [
         {
-          id: "image-risk",
+          id: "registry-scan",
+          widget_id: "2bd3caac-25a3-47e3-8566-389d1571d7af",
           name: "Image Risk Assessment",
           type: "risk-bar",
           total: 2,
@@ -71,7 +76,8 @@ export const initialDashboardConfig = {
           ],
         },
         {
-          id: "security-issues",
+          id: "registry-scan",
+          widget_id: "6c1469e4-b653-4eec-9d51-099d9d15de21",
           name: "Image Security Issues",
           type: "risk-bar",
           total: 2,
@@ -89,5 +95,3 @@ export const initialDashboardConfig = {
     },
   ],
 };
-
-
