@@ -122,6 +122,7 @@ const Dashboard = () => {
                 item.type === "risk-bar" ? (
                   <RiskAssessment
                     key={item.widget_id}
+                    name={item.name}
                     total={item.total}
                     label={item.label}
                     bars={item.bars}

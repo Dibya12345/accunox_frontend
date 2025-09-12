@@ -1,11 +1,11 @@
 import "./riskassementwidget.scss";
 import { X } from "lucide-react";
 
-const RiskAssementWidget = ({ total, label, bars, legend, onClose }) => {
+const RiskAssementWidget = ({ total, label, bars, legend, name, onClose }) => {
   return (
     <div className="risk-widget-content">
       <div className="widget_header">
-        <span>Risk Assessment</span>
+        <span>{name}</span>
         <span className="close_icon" onClick={onClose}>
           <X />
         </span>

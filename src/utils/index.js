@@ -64,8 +64,8 @@ export const initialDashboardConfig = {
           widget_id: "2bd3caac-25a3-47e3-8566-389d1571d7af",
           name: "Image Risk Assessment",
           type: "risk-bar",
-          total: 2,
-          label: "Total Images are 2",
+          total: 1470,
+          label: "Total Vulnerabilities",
           bars: [
             { width: "50%", color: "#d93025" },
             { width: "50%", color: "#f9ab00" },

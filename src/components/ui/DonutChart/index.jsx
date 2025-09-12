@@ -1,5 +1,6 @@
 import React from "react";
 import "./donutchart.scss";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 const DonutChart = ({ segments, total, centerLabel }) => {
   const radius = 18.915;
@@ -14,7 +15,7 @@ const DonutChart = ({ segments, total, centerLabel }) => {
           r={radius}
           fill="transparent"
           stroke="#f1f3f4"
-          strokeWidth="3"
+          strokeWidth="4"
         />
         {segments.map((segment, index) => {
           const strokeDasharray = `${segment.percentage} ${
@@ -31,7 +32,7 @@ const DonutChart = ({ segments, total, centerLabel }) => {
               r={radius}
               fill="transparent"
               stroke={segment.color}
-              strokeWidth="3"
+              strokeWidth="4"
               strokeDasharray={strokeDasharray}
               strokeDashoffset={strokeDashoffset}
               strokeLinecap="round"

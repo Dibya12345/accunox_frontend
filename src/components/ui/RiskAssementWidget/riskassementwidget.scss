@@ -47,22 +47,28 @@ $risk-bg: #f1f3f4;
 .risk-assessment {
   width: 90%;
   text-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 70%;
 
   .risk-number {
-    display: flex;
     gap: 12px;
+   
 
     &-value {
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 700;
       color: $risk-text;
       margin-bottom: 4px;
+      margin-right: 2px;
     }
 
     &-label {
       font-size: 12px;
-      color: $risk-muted;
+      font-weight: 600;
       align-self: flex-end;
+      color: $risk-text;
     }
   }
 
