@@ -3,7 +3,7 @@ import { Settings, MoreVertical } from "lucide-react";
 import NextButton from "../assets/nextbutton.svg";
 import "./header.scss";
 
-const Header = () => {
+const Header = ({ searchTerm, setSearchTerm }) => {
   return (
     <header className="dashboard-header">
       <section className="dashboard-header__left">
@@ -18,6 +18,8 @@ const Header = () => {
           type="text"
           placeholder="Search anything..."
           className="dashboard-header__right__search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <div className="dashboard-header__right__actions">
           <button className="dashboard-header__right__actions__icon-btn">
@@ -26,9 +28,7 @@ const Header = () => {
           <button className="dashboard-header__right__actions__icon-btn">
             <MoreVertical size={16} />
           </button>
-          <div className="dashboard-header__right__actions__avatar">
-            Last 5 days
-          </div>
+         
         </div>
       </section>
     </header>

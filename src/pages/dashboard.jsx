@@ -20,6 +20,7 @@ const Dashboard = () => {
     text: "",
     type: "",
   });
+  const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const dashboardConfig = useSelector((state) => state.widget.value);
 
@@ -27,9 +28,18 @@ const Dashboard = () => {
     dispatch(deleteWidget({ categoryId, widgetId }));
   };
 
+  const filterWidgets = (widgets) => {
+    if (!searchTerm.trim()) return widgets;
+    return widgets.filter(
+      (w) =>
+        w.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (w.text && w.text.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  };
+
   return (
     <main className="dashboard_container">
-      <Header />
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <section className="dashboard_content">
         {/* Dashboard Header */}
         <div className="dashboard_title">
@@ -57,8 +67,8 @@ const Dashboard = () => {
           <h2 className="section_title">CSPM Executive Dashboard</h2>
           {/* CWPP Dashboard  */}
           <div className="widget_grid">
-            {dashboardConfig.categories[0]?.widgets
-              ?.filter((item) => !item.hidden)
+            {filterWidgets(dashboardConfig.categories[0]?.widgets ?? [])
+              .filter((item) => !item.hidden)
               .map((item) =>
                 item.type === "donut-widget" ? (
                   <DonutWidget
@@ -83,8 +93,8 @@ const Dashboard = () => {
           </div>
           <h2 className="section_title">CWPP Dashboard</h2>
           <div className="widget_grid">
-            {dashboardConfig.categories[1]?.widgets
-              ?.filter((item) => !item.hidden)
+            {filterWidgets(dashboardConfig.categories[1]?.widgets ?? [])
+              .filter((item) => !item.hidden)
               .map((item) =>
                 item.type === "empty-graph" ? (
                   <GraphDataWidget
@@ -106,8 +116,8 @@ const Dashboard = () => {
           </div>
           <h2 className="section_title">Registry Scan</h2>
           <div className="widget_grid">
-            {dashboardConfig.categories[2]?.widgets
-              ?.filter((item) => !item.hidden)
+            {filterWidgets(dashboardConfig.categories[2]?.widgets ?? [])
+              .filter((item) => !item.hidden)
               .map((item) =>
                 item.type === "risk-bar" ? (
                   <RiskAssessment
