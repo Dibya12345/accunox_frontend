@@ -146,7 +146,9 @@ const Dashboard = () => {
                       />
                     )
                   )}
-                  <AddWidgetBtn />
+                  <AddWidgetBtn
+                    onClick={() => setShowAddNewWidgetModal(true)}
+                  />
                 </>
               );
             })()}
@@ -190,7 +192,9 @@ const Dashboard = () => {
                       />
                     )
                   )}
-                  <AddWidgetBtn />
+                  <AddWidgetBtn
+                    onClick={() => setShowAddNewWidgetModal(true)}
+                  />
                 </>
               );
             })()}
