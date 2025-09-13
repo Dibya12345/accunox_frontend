@@ -25,7 +25,6 @@ const Dashboard = () => {
   const dashboardConfig = useSelector((state) => state.widget.value);
 
   const handleConfirmWidgets = (widgetsToAdd) => {
-    console.log(widgetsToAdd);
     widgetsToAdd.forEach((widget) => {
       dispatch(addWidget(widget));
     });
@@ -98,6 +97,7 @@ const Dashboard = () => {
                 item.type === "empty-graph" ? (
                   <GraphDataWidget
                     key={item.widget_id}
+                    name={item.name}
                     onClose={() => handleWidgetClose(item.id, item.widget_id)}
                   />
                 ) : (

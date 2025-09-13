@@ -1,11 +1,11 @@
 import { ChartColumn, X } from "lucide-react";
 import "./graphdatawidget.scss";
 
-const GraphDataWidget = ({ onClose }) => {
+const GraphDataWidget = ({ name,  onClose }) => {
   return (
     <div className="graph_widget">
       <div className="widget_header">
-        <span>Graph Data</span>
+        <span>{name}</span>
         <span className="close_icon" onClick={onClose}>
           <X />
         </span>
