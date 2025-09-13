@@ -16,6 +16,7 @@
     "@mui/x-charts": "^8.11.1",
     "@mui/x-charts-pro": "^8.11.1",
     "@reduxjs/toolkit": "^2.9.0",
+    "d3": "^7.9.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.542.0",

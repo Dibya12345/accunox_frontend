@@ -74,7 +74,10 @@ const Dashboard = () => {
                   <DonutWidget
                     key={item.widget_id}
                     segments={item.segments}
+                    name={item.name}
                     items={item.items}
+                    width={150}
+                    height={150}
                     onClose={() => handleWidgetClose(item.id, item.widget_id)}
                   />
                 ) : (
