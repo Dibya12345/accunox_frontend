@@ -9,9 +9,7 @@ $risk-bg: #f1f3f4;
   overflow: hidden;
   height: 300px;
   padding: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+ 
   align-items: center;
   position: relative;
 
@@ -49,7 +47,7 @@ $risk-bg: #f1f3f4;
   text-align: start;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   height: 70%;
 
   .risk-number {
