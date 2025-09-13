@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import "./addwidgetsidebar.scss";
-import { toggleWidgetHidden } from "../../store/features/widget/widgetSlice";
+import { deleteWidget } from "../../store/features/widget/widgetSlice";
 
 const AddWidgetSidebar = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -15,12 +15,28 @@ const AddWidgetSidebar = ({ isOpen, onClose }) => {
   ];
 
   const [activeTab, setActiveTab] = useState(tabConfig[0].categoryId);
+  const [selectedWidgets, setSelectedWidgets] = useState({});
+
+  // Reset selected widgets when tab or sidebar opens
+  useEffect(() => {
+    if (isOpen) {
+      const category = dashboardConfig?.categories.find(
+        (cat) => cat.id === activeTab
+      );
+      const initialState = {};
+      category?.widgets.forEach((widget) => {
+        initialState[widget.widget_id] = true; // All are initially checked
+      });
+      setSelectedWidgets(initialState);
+    }
+  }, [isOpen, activeTab, dashboardConfig]);
 
   if (!isOpen) return null;
 
   const handleClose = () => {
     onClose();
     setActiveTab(tabConfig[0].categoryId);
+    setSelectedWidgets({});
   };
 
   const getWidgetsForActiveTab = () => {
@@ -30,18 +46,30 @@ const AddWidgetSidebar = ({ isOpen, onClose }) => {
     return category?.widgets || [];
   };
 
-  const handleCheckboxChange = (widgetId, categoryId, checked) => {
-    dispatch(toggleWidgetHidden({ widgetId, categoryId, hidden: !checked }));
+  const handleCheckboxChange = (widgetId, checked) => {
+    setSelectedWidgets((prev) => ({
+      ...prev,
+      [widgetId]: checked,
+    }));
   };
 
-  const anyHiddenWidgets = dashboardConfig.categories
-    .flatMap((category) => category.widgets)
-    .some((widget) => widget.hidden);
-
   const handleConfirm = () => {
+    const widgetsToDelete = Object.entries(selectedWidgets)
+      .filter(([_, isChecked]) => !isChecked)
+      .map(([widgetId]) => widgetId);
+
+    const currentCategory = dashboardConfig.categories.find(
+      (category) => category.id === activeTab
+    );
+
+    widgetsToDelete.forEach((widgetId) => {
+      dispatch(deleteWidget({ widgetId, categoryId: currentCategory.id }));
+    });
 
     handleClose();
   };
+
+  const hasChanges = Object.values(selectedWidgets).some((checked) => !checked);
 
   return (
     <div className="sidebar-overlay" onClick={handleClose}>
@@ -52,7 +80,7 @@ const AddWidgetSidebar = ({ isOpen, onClose }) => {
           </button>
           <h2 className="sidebar-title">Add Widget</h2>
           <p className="sidebar-subtitle">
-            Personalize your dashboard by adding the following widget
+            Personalize your dashboard by adding the following widgets
           </p>
         </div>
 
@@ -78,13 +106,9 @@ const AddWidgetSidebar = ({ isOpen, onClose }) => {
                   type="checkbox"
                   className="widget-checkbox"
                   id={item.widget_id}
-                  checked={item.hidden}
+                  checked={selectedWidgets[item.widget_id] ?? true}
                   onChange={(e) =>
-                    handleCheckboxChange(
-                      item.widget_id,
-                      item.categoryId,
-                      e.target.checked
-                    )
+                    handleCheckboxChange(item.widget_id, e.target.checked)
                   }
                 />
                 <label className="widget-label" htmlFor={item.widget_id}>
@@ -103,7 +127,7 @@ const AddWidgetSidebar = ({ isOpen, onClose }) => {
             <button
               className="btn btn-primary"
               onClick={handleConfirm}
-              disabled={!anyHiddenWidgets}
+              disabled={!hasChanges}
             >
               Confirm
             </button>
