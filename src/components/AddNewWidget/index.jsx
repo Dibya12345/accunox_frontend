@@ -1,11 +1,10 @@
 import { X } from "lucide-react";
 import { initialDashboardConfig } from "../../utils";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { v4 as uuidv4 } from "uuid"; // <-- Import UUID generator
+import { v4 as uuidv4 } from "uuid";
 import "./addnewwidget.scss";
 
-// Validation schema
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Widget name is required"),
   text: Yup.string().required("Widget content is required"),
@@ -31,6 +30,8 @@ const AddNewWidget = ({
         <Formik
           initialValues={addNewWidgetModal}
           validationSchema={validationSchema}
+          validateOnBlur={true}
+          validateOnChange={true}
           onSubmit={(values, { resetForm }) => {
             const newWidget = {
               id: values.category,
@@ -47,11 +48,16 @@ const AddNewWidget = ({
             setAddNewWidgetModal({ name: "", text: "", category: "" });
           }}
         >
-          {() => (
+          {({ errors, touched, handleBlur, isValid }) => (
             <Form>
               <div className="form_group">
-                <label>Category</label>
-                <Field as="select" name="category">
+                <label htmlFor="category">Category</label>
+                <Field
+                  as="select"
+                  name="category"
+                  onBlur={handleBlur}
+                  id="category"
+                >
                   <option value="">Select a category</option>
                   {initialDashboardConfig.categories.map((category) => (
                     <option key={category.id} value={category.id}>
@@ -59,31 +65,37 @@ const AddNewWidget = ({
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage
-                  name="category"
-                  component="div"
-                  className="error"
-                />
+                {errors.category && touched.category && (
+                  <div className="error">{errors.category}</div>
+                )}
               </div>
 
               <div className="form_group">
-                <label>Widget Name</label>
+                <label htmlFor="name">Widget Name</label>
                 <Field
                   type="text"
                   name="name"
+                  id="name"
                   placeholder="Enter widget name"
+                  onBlur={handleBlur}
                 />
-                <ErrorMessage name="name" component="div" className="error" />
+                {errors.name && touched.name && (
+                  <div className="error">{errors.name}</div>
+                )}
               </div>
 
               <div className="form_group">
-                <label>Widget Content</label>
+                <label htmlFor="text">Widget Content</label>
                 <Field
                   as="textarea"
                   name="text"
+                  id="text"
                   placeholder="Enter widget content or description"
+                  onBlur={handleBlur}
                 />
-                <ErrorMessage name="text" component="div" className="error" />
+                {errors.text && touched.text && (
+                  <div className="error">{errors.text}</div>
+                )}
               </div>
 
               <div className="button_group">
@@ -94,7 +106,11 @@ const AddNewWidget = ({
                 >
                   Cancel
                 </button>
-                <button className="secondary_btn" type="submit">
+                <button
+                  className="secondary_btn"
+                  type="submit"
+                  disabled={!isValid}
+                >
                   Add Widget
                 </button>
               </div>

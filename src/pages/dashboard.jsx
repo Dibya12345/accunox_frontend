@@ -1,6 +1,6 @@
 import "./dashboard.scss";
 import Header from "../components/header";
-import { Plus, MoreVertical, RefreshCcw, X } from "lucide-react";
+import { Plus, MoreVertical, RefreshCcw } from "lucide-react";
 import AddWidgetBtn from "../components/ui/AddWidgetBtn";
 import GraphDataWidget from "../components/ui/GraphDataWidget";
 import DonutWidget from "../components/ui/DonutWidget";
@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import NormalWidget from "../components/ui/NormalWidget";
 import AddNewWidget from "../components/AddNewWidget";
 import { addWidget, deleteWidget } from "../store/features/widget/widgetSlice";
+import NoWidgetsFound from "../components/ui/NoWidgetFound";
 
 const Dashboard = () => {
   const [showAddWidget, setShowAddWidget] = useState(false);
@@ -63,82 +64,136 @@ const Dashboard = () => {
 
         {/* Dashboard Content */}
         <div className="dashboard_section">
-          {/* Executive Scan */}
+          {/* CSPM Executive Dashboard */}
           <h2 className="section_title">CSPM Executive Dashboard</h2>
-          {/* CWPP Dashboard  */}
           <div className="widget_grid">
-            {filterWidgets(dashboardConfig.categories[0]?.widgets ?? [])
-              .filter((item) => !item.hidden)
-              .map((item) =>
-                item.type === "donut-widget" ? (
-                  <DonutWidget
-                    key={item.widget_id}
-                    segments={item.segments}
-                    name={item.name}
-                    items={item.items}
-                    width={150}
-                    height={150}
-                    onClose={() => handleWidgetClose(item.id, item.widget_id)}
+            {(() => {
+              const widgets = filterWidgets(
+                dashboardConfig.categories[0]?.widgets ?? []
+              ).filter((item) => !item.hidden);
+
+              if (widgets.length === 0) {
+                return (
+                  <NoWidgetsFound sectionTitle="CSPM Executive Dashboard" />
+                );
+              }
+
+              return (
+                <>
+                  {widgets.map((item) =>
+                    item.type === "donut-widget" ? (
+                      <DonutWidget
+                        key={item.widget_id}
+                        segments={item.segments}
+                        name={item.name}
+                        items={item.items}
+                        width={150}
+                        height={150}
+                        onClose={() =>
+                          handleWidgetClose(item.id, item.widget_id)
+                        }
+                      />
+                    ) : (
+                      <NormalWidget
+                        key={item.widget_id}
+                        title={item.name}
+                        content={item.text}
+                        onClose={() =>
+                          handleWidgetClose(item.id, item.widget_id)
+                        }
+                      />
+                    )
+                  )}
+                  <AddWidgetBtn
+                    onClick={() => setShowAddNewWidgetModal(true)}
                   />
-                ) : (
-                  <NormalWidget
-                    key={item.widget_id}
-                    title={item.name}
-                    content={item.text}
-                    onClose={() => handleWidgetClose(item.id, item.widget_id)}
-                  />
-                )
-              )}
-            <AddWidgetBtn onClick={() => setShowAddNewWidgetModal(true)} />
+                </>
+              );
+            })()}
           </div>
+
+          {/* CWPP Dashboard */}
           <h2 className="section_title">CWPP Dashboard</h2>
           <div className="widget_grid">
-            {filterWidgets(dashboardConfig.categories[1]?.widgets ?? [])
-              .filter((item) => !item.hidden)
-              .map((item) =>
-                item.type === "empty-graph" ? (
-                  <GraphDataWidget
-                    key={item.widget_id}
-                    name={item.name}
-                    onClose={() => handleWidgetClose(item.id, item.widget_id)}
-                  />
-                ) : (
-                  <NormalWidget
-                    key={item.widget_id}
-                    title={item.name}
-                    content={item.text}
-                    onClose={() => handleWidgetClose(item.id, item.widget_id)}
-                  />
-                )
-              )}
+            {(() => {
+              const widgets = filterWidgets(
+                dashboardConfig.categories[1]?.widgets ?? []
+              ).filter((item) => !item.hidden);
 
-            <AddWidgetBtn />
+              if (widgets.length === 0) {
+                return <NoWidgetsFound sectionTitle="CWPP Dashboard" />;
+              }
+
+              return (
+                <>
+                  {widgets.map((item) =>
+                    item.type === "empty-graph" ? (
+                      <GraphDataWidget
+                        key={item.widget_id}
+                        name={item.name}
+                        onClose={() =>
+                          handleWidgetClose(item.id, item.widget_id)
+                        }
+                      />
+                    ) : (
+                      <NormalWidget
+                        key={item.widget_id}
+                        title={item.name}
+                        content={item.text}
+                        onClose={() =>
+                          handleWidgetClose(item.id, item.widget_id)
+                        }
+                      />
+                    )
+                  )}
+                  <AddWidgetBtn />
+                </>
+              );
+            })()}
           </div>
+
+          {/* Registry Scan */}
           <h2 className="section_title">Registry Scan</h2>
           <div className="widget_grid">
-            {filterWidgets(dashboardConfig.categories[2]?.widgets ?? [])
-              .filter((item) => !item.hidden)
-              .map((item) =>
-                item.type === "risk-bar" ? (
-                  <RiskAssessment
-                    key={item.widget_id}
-                    name={item.name}
-                    total={item.total}
-                    label={item.label}
-                    bars={item.bars}
-                    legend={item.legend}
-                    onClose={() => handleWidgetClose(item.id, item.widget_id)}
-                  />
-                ) : (
-                  <NormalWidget
-                    key={item.widget_id}
-                    title={item.name}
-                    content={item.text}
-                    onClose={() => handleWidgetClose(item.id, item.widget_id)}
-                  />
-                )
-              )}
-            <AddWidgetBtn />
+            {(() => {
+              const widgets = filterWidgets(
+                dashboardConfig.categories[2]?.widgets ?? []
+              ).filter((item) => !item.hidden);
+
+              if (widgets.length === 0) {
+                return <NoWidgetsFound sectionTitle={"Registry Scan"} />;
+              }
+
+              return (
+                <>
+                  {widgets.map((item) =>
+                    item.type === "risk-bar" ? (
+                      <RiskAssessment
+                        key={item.widget_id}
+                        name={item.name}
+                        total={item.total}
+                        label={item.label}
+                        bars={item.bars}
+                        legend={item.legend}
+                        onClose={() =>
+                          handleWidgetClose(item.id, item.widget_id)
+                        }
+                      />
+                    ) : (
+                      <NormalWidget
+                        key={item.widget_id}
+                        title={item.name}
+                        content={item.text}
+                        onClose={() =>
+                          handleWidgetClose(item.id, item.widget_id)
+                        }
+                      />
+                    )
+                  )}
+                  <AddWidgetBtn />
+                </>
+              );
+            })()}
           </div>
         </div>
       </section>
