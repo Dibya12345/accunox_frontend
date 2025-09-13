@@ -14,7 +14,6 @@ import { addWidget, deleteWidget } from "../store/features/widget/widgetSlice";
 
 const Dashboard = () => {
   const [showAddWidget, setShowAddWidget] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [showAddNewWidgetModal, setShowAddNewWidgetModal] = useState(false);
   const [addNewWidgetModal, setAddNewWidgetModal] = useState({
     name: "",
@@ -23,15 +22,6 @@ const Dashboard = () => {
   });
   const dispatch = useDispatch();
   const dashboardConfig = useSelector((state) => state.widget.value);
-
-  const handleConfirmWidgets = (widgetsToAdd) => {
-    widgetsToAdd.forEach((widget) => {
-      dispatch(addWidget(widget));
-    });
-
-    setSelectedCategory("");
-    setShowAddWidget(false);
-  };
 
   const handleWidgetClose = (categoryId, widgetId) => {
     dispatch(deleteWidget({ categoryId, widgetId }));
@@ -67,8 +57,9 @@ const Dashboard = () => {
           <h2 className="section_title">CSPM Executive Dashboard</h2>
           {/* CWPP Dashboard  */}
           <div className="widget_grid">
-            {dashboardConfig.categories.length > 0 &&
-              dashboardConfig.categories[0]?.widgets?.map((item) =>
+            {dashboardConfig.categories[0]?.widgets
+              ?.filter((item) => !item.hidden)
+              .map((item) =>
                 item.type === "donut-widget" ? (
                   <DonutWidget
                     key={item.widget_id}
@@ -92,8 +83,9 @@ const Dashboard = () => {
           </div>
           <h2 className="section_title">CWPP Dashboard</h2>
           <div className="widget_grid">
-            {dashboardConfig.categories.length > 0 &&
-              dashboardConfig.categories[1]?.widgets?.map((item) =>
+            {dashboardConfig.categories[1]?.widgets
+              ?.filter((item) => !item.hidden)
+              .map((item) =>
                 item.type === "empty-graph" ? (
                   <GraphDataWidget
                     key={item.widget_id}
@@ -109,12 +101,14 @@ const Dashboard = () => {
                   />
                 )
               )}
+
             <AddWidgetBtn />
           </div>
           <h2 className="section_title">Registry Scan</h2>
           <div className="widget_grid">
-            {dashboardConfig.categories.length > 0 &&
-              dashboardConfig.categories[2]?.widgets?.map((item) =>
+            {dashboardConfig.categories[2]?.widgets
+              ?.filter((item) => !item.hidden)
+              .map((item) =>
                 item.type === "risk-bar" ? (
                   <RiskAssessment
                     key={item.widget_id}
@@ -143,8 +137,6 @@ const Dashboard = () => {
       <AddWidgetSideBar
         isOpen={showAddWidget}
         onClose={() => setShowAddWidget(false)}
-        onConfirm={handleConfirmWidgets}
-        selectedCategory={selectedCategory}
       />
       {showAddNewWidgetModal && (
         <AddNewWidget

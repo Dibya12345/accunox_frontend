@@ -42,9 +42,46 @@ export const widgetSlice = createSlice({
     resetDashboard: (state) => {
       state.value = initialDashboardConfig;
     },
+    hideWidgets: (state, action) => {
+      const widgetIdsToHide = action.payload;
+
+      state.value.categories = state.value.categories.map((category) => {
+        const updatedWidgets = category.widgets.map((widget) =>
+          widgetIdsToHide.includes(widget.widget_id)
+            ? { ...widget, hidden: true }
+            : widget
+        );
+
+        return {
+          ...category,
+          widgets: updatedWidgets,
+        };
+      });
+    },
+    toggleWidgetHidden: (state, action) => {
+      const { widgetId, categoryId } = action.payload;
+
+      state.value.categories = state.value.categories.map((category) => {
+        if (category.id === categoryId) {
+          const updatedWidgets = category.widgets.map((widget) =>
+            widget.widget_id === widgetId
+              ? { ...widget, hidden: !widget.hidden }
+              : widget
+          );
+          return { ...category, widgets: updatedWidgets };
+        }
+        return category;
+      });
+    },
   },
 });
 
-export const { addWidget, deleteWidget, resetDashboard } = widgetSlice.actions;
+export const {
+  addWidget,
+  deleteWidget,
+  resetDashboard,
+  hideWidgets,
+  toggleWidgetHidden,
+} = widgetSlice.actions;
 
 export default widgetSlice.reducer;

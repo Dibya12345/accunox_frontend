@@ -1,55 +1,47 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import "./addwidgetsidebar.scss";
-import { useSelector } from "react-redux";
+import { toggleWidgetHidden } from "../../store/features/widget/widgetSlice";
 
-const AddWidgetSidebar = ({ isOpen, onClose, onConfirm, selectedCategory }) => {
-  const [activeTab, setActiveTab] = useState("CSPM");
-  const [selectedWidgets, setSelectedWidgets] = useState([]);
+const AddWidgetSidebar = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const dashboardConfig = useSelector((state) => state.widget.value);
 
-  const tabs = ["CSPM", "CWPP", "Registry"];
+  const tabConfig = [
+    { label: "CSPM", categoryId: "cspm-executive" },
+    { label: "CWPP", categoryId: "cwpp-dashboard" },
+    { label: "Registry", categoryId: "registry-scan" },
+  ];
 
-  const getWidgetsByCategory = (tab) => {
-    switch (tab) {
-      case "CSPM":
-        return dashboardConfig?.categories[0]?.widgets || [];
-      case "CWPP":
-        return dashboardConfig?.categories[1]?.widgets || [];
-      case "Registry":
-        return dashboardConfig?.categories[2]?.widgets || [];
-      default:
-        return [];
-    }
-  };
-
-  const toggleWidgetSelection = (widgetId) => {
-    setSelectedWidgets((prev) =>
-      prev.includes(widgetId)
-        ? prev.filter((id) => id !== widgetId)
-        : [...prev, widgetId]
-    );
-  };
-
-  const handleConfirm = () => {
-    const widgetsToAdd = selectedWidgets.map((widgetId) => {
-      const widget = getWidgetsByCategory(activeTab).find(
-        (w) => w.widget_id === widgetId
-      );
-
-      return widget;
-    });
-
-    onConfirm(widgetsToAdd);
-    setSelectedWidgets([]);
-  };
-
-  const handleClose = () => {
-    setSelectedWidgets([]);
-    onClose();
-  };
+  const [activeTab, setActiveTab] = useState(tabConfig[0].categoryId);
 
   if (!isOpen) return null;
+
+  const handleClose = () => {
+    onClose();
+    setActiveTab(tabConfig[0].categoryId);
+  };
+
+  const getWidgetsForActiveTab = () => {
+    const category = dashboardConfig?.categories.find(
+      (cat) => cat.id === activeTab
+    );
+    return category?.widgets || [];
+  };
+
+  const handleCheckboxChange = (widgetId, categoryId, checked) => {
+    dispatch(toggleWidgetHidden({ widgetId, categoryId, hidden: !checked }));
+  };
+
+  const anyHiddenWidgets = dashboardConfig.categories
+    .flatMap((category) => category.widgets)
+    .some((widget) => widget.hidden);
+
+  const handleConfirm = () => {
+
+    handleClose();
+  };
 
   return (
     <div className="sidebar-overlay" onClick={handleClose}>
@@ -66,31 +58,38 @@ const AddWidgetSidebar = ({ isOpen, onClose, onConfirm, selectedCategory }) => {
 
         <div className="sidebar-body">
           <div className="tabs-container">
-            {tabs.map((tab) => (
+            {tabConfig.map((tab) => (
               <button
-                key={tab}
-                className={`tab ${activeTab === tab ? "active" : ""}`}
-                onClick={() => setActiveTab(tab)}
+                key={tab.categoryId}
+                className={`tab ${
+                  activeTab === tab.categoryId ? "active" : ""
+                }`}
+                onClick={() => setActiveTab(tab.categoryId)}
               >
-                {tab}
+                {tab.label}
               </button>
             ))}
           </div>
 
           <div className="widgets-list">
-            {getWidgetsByCategory(activeTab).map((widget) => (
-              <div
-                key={widget.widget_id}
-                className="widget-item"
-                onClick={() => toggleWidgetSelection(widget.widget_id)}
-              >
+            {getWidgetsForActiveTab().map((item) => (
+              <div key={item.widget_id} className="widget-item">
                 <input
                   type="checkbox"
                   className="widget-checkbox"
-                  checked={selectedWidgets.includes(widget.widget_id)}
-                  onChange={() => toggleWidgetSelection(widget.widget_id)}
+                  id={item.widget_id}
+                  checked={item.hidden}
+                  onChange={(e) =>
+                    handleCheckboxChange(
+                      item.widget_id,
+                      item.categoryId,
+                      e.target.checked
+                    )
+                  }
                 />
-                <label className="widget-label">{widget.name}</label>
+                <label className="widget-label" htmlFor={item.widget_id}>
+                  {item.name}
+                </label>
               </div>
             ))}
           </div>
@@ -104,7 +103,7 @@ const AddWidgetSidebar = ({ isOpen, onClose, onConfirm, selectedCategory }) => {
             <button
               className="btn btn-primary"
               onClick={handleConfirm}
-              disabled={selectedWidgets.length === 0}
+              disabled={!anyHiddenWidgets}
             >
               Confirm
             </button>
