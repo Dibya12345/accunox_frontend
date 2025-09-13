@@ -34,10 +34,11 @@ const AddNewWidget = ({
           onSubmit={(values, { resetForm }) => {
             const newWidget = {
               id: values.category,
-              category: values.category,
+              categoryId: values.category,
               widget_id: uuidv4(),
               name: values.name,
               text: values.text,
+              hidden: false,
               type: "custom",
             };
             onAdd(newWidget);
