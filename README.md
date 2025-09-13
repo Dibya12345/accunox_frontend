@@ -4,6 +4,9 @@ A fully customizable, JSON-driven security dashboard built with React that allow
 
 [🔗 Live Demo](https://accunoxdashboard.netlify.app/)
 
+![Dashboard Demo](./hello.gif)
+
+
 ## Features
 
 ### Dynamic Widget Management
@@ -32,6 +35,7 @@ cd accunox_frontend
 npm install
 
 ## Quick Start
+npm run dev
 
 ### Basic Usage
 
