@@ -9,7 +9,10 @@ export const initialDashboardConfig = {
           widget_id: "6f0f03e1-d346-4b4e-bcf2-729f4514c2ef",
           name: "Cloud Accounts",
           type: "donut-widget",
-          segments: [{ percentage: 50, color: "#4285f4" }],
+          segments: [
+            { percentage: 50, color: "#4285f4" },
+            { percentage: 50, color: "#e8eaed" },
+          ],
           items: [
             { color: "#4285f4", label: "Connected (2)" },
             { color: "#e8eaed", label: "Not Connected (2)" },

@@ -11,10 +11,11 @@ export const widgetSlice = createSlice({
   reducers: {
     addWidget: (state, action) => {
       const newWidget = action.payload;
+      console.log("New widget: " + JSON.stringify(newWidget, null, 2));
       state.value = {
         ...state.value,
         categories: state.value.categories.map((category) =>
-          category.id === newWidget.category
+          category.id === newWidget.id
             ? {
                 ...category,
                 widgets: [...category.widgets, newWidget],

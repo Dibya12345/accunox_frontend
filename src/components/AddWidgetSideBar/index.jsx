@@ -37,13 +37,7 @@ const AddWidgetSidebar = ({ isOpen, onClose, onConfirm, selectedCategory }) => {
         (w) => w.widget_id === widgetId
       );
 
-      return {
-        id: `${widget.widget_id}-${Date.now()}-${Math.random()}`,
-        name: widget.name,
-        text: `This is a ${widget.name} widget. It provides detailed information and analytics for monitoring and managing your security infrastructure.`,
-        type: "text",
-        category: selectedCategory || widget.id, // still uses `id` from category for context
-      };
+      return widget;
     });
 
     onConfirm(widgetsToAdd);

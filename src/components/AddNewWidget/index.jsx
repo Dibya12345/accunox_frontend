@@ -33,15 +33,14 @@ const AddNewWidget = ({
           validationSchema={validationSchema}
           onSubmit={(values, { resetForm }) => {
             const newWidget = {
-              id: values.category, // Category ID (for delete logic)
-              category: values.category, // Category ID (for Redux add logic)
-              widget_id: uuidv4(), // ✅ Unique ID
+              id: values.category,
+              category: values.category,
+              widget_id: uuidv4(),
               name: values.name,
               text: values.text,
-              type: "custom", // Mark as custom widget
+              type: "custom",
             };
-
-            onAdd(newWidget); // Dispatch action from props
+            onAdd(newWidget);
             resetForm();
             setShowAddWidget(false);
             setAddNewWidgetModal({ name: "", text: "", category: "" });

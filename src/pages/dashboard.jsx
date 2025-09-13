@@ -25,16 +25,9 @@ const Dashboard = () => {
   const dashboardConfig = useSelector((state) => state.widget.value);
 
   const handleConfirmWidgets = (widgetsToAdd) => {
+    console.log(widgetsToAdd);
     widgetsToAdd.forEach((widget) => {
-      const updatedConfig = {
-        ...dashboardConfig,
-        categories: dashboardConfig.categories.map((category) =>
-          category.id === widget.category
-            ? { ...category, widgets: [...category.widgets, widget] }
-            : category
-        ),
-      };
-      setDashboardConfig(updatedConfig);
+      dispatch(addWidget(widget));
     });
 
     setSelectedCategory("");
