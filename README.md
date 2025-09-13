@@ -2,7 +2,7 @@
 
 A fully customizable, JSON-driven security dashboard built with React that allows users to dynamically add, remove, and manage widgets across different categories.
 
-![Dashboard Preview](https://accunoxdashboard.netlify.app/)
+[🔗 Live Demo](https://accunoxdashboard.netlify.app/)
 
 ## Features
 
@@ -13,28 +13,7 @@ A fully customizable, JSON-driven security dashboard built with React that allow
 - **Search Widgets**: Real-time search through available widgets
 - **Category Organization**: Organize widgets into logical categories
 
-### User Interface
-
-- **Responsive Design**: Works seamlessly across desktop, tablet, and mobile
-- **Modern UI**: Clean, professional interface with smooth animations
-- **Sidebar Navigation**: Slide-out panel for widget selection
-- **Tab Organization**: Categorized widget library (CSPM, CWPP, Image, Ticket)
-
-### 🔧 Technical Features
-
-- **JSON Configuration**: Entire dashboard structure driven by JSON
-- **Component Architecture**: Modular, reusable React components
-- **State Management**: Efficient React hooks for state handling
-- **SCSS Integration**: Component-scoped styling with CSS-in-JS
-
-## 📋 Table of Contents
-
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Contributing](#contributing)
-- [License](#license)
-
-## 🛠 Installation
+## Installation
 
 ### Prerequisites
 
@@ -149,6 +128,6 @@ npm run dev
 npm run build
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
