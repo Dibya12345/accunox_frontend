@@ -7,12 +7,15 @@ const Header = ({ searchTerm, setSearchTerm }) => {
   return (
     <header className="dashboard-header">
       <section className="dashboard-header__left">
-        <span className="dashboard-header__left__breadcrumb">Home</span>
-        <span className="dashboard-header__left__separator">
-          <img src={NextButton} alt="Next" />
-        </span>
-        <span className="dashboard-header__left__active">Dashboard UI</span>
+        <div className="dashboard-header__left__breadcrumb-group">
+          <span className="dashboard-header__left__breadcrumb">Home</span>
+          <span className="dashboard-header__left__separator">
+            <img src={NextButton} alt="Next" />
+          </span>
+          <span className="dashboard-header__left__active">Dashboard UI</span>
+        </div>
       </section>
+
       <section className="dashboard-header__right">
         <input
           type="text"
@@ -28,7 +31,6 @@ const Header = ({ searchTerm, setSearchTerm }) => {
           <button className="dashboard-header__right__actions__icon-btn">
             <MoreVertical size={16} />
           </button>
-         
         </div>
       </section>
     </header>
