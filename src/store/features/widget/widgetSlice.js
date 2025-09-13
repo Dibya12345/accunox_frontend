@@ -24,8 +24,6 @@ export const widgetSlice = createSlice({
         ),
       };
     },
-    removeWidget: (state, action) => {},
-    updateWidget: (state, action) => {},
     deleteWidget: (state, action) => {
       const { categoryId, widgetId } = action.payload;
 
@@ -48,12 +46,6 @@ export const widgetSlice = createSlice({
   },
 });
 
-export const {
-  addWidget,
-  removeWidget,
-  updateWidget,
-  deleteWidget,
-  resetDashboard,
-} = widgetSlice.actions;
+export const { addWidget, deleteWidget, resetDashboard } = widgetSlice.actions;
 
 export default widgetSlice.reducer;
